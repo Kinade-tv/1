@@ -5,12 +5,22 @@
 <!DOCTYPE html>
 <!-- === Хедер с MP4 видео === -->
 <header id="site-header">
-  <video src="https://tv.theindiebeat.fm/hls/stream.m3u8"
-       poster="https://uafix.net/uploads/posts/2026-03/1772484426_6.jpg"
-       controls
-       width="640"
-       height="360">
-</video>
+  <video id="video" controls width="640" height="360" poster="https://uafix.net/uploads/posts/2026-03/1772484426_6.jpg"></video>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+  var video = document.getElementById('video');
+  var videoSrc = "https://tv.theindiebeat.fm/hls/stream.m3u8";
+
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+  }
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+  }
+</script>
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
